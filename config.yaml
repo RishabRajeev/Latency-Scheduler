@@ -1,0 +1,25 @@
+# Q2: Latency-Aware Task Scheduling and Load Balancing Configuration
+simulation:
+  duration_ms: 600
+  seed: 42
+
+topology:
+  num_fog_nodes: 3
+  fog_cpu_capacity: 5        # Tasks per node before triggering load balancing
+  cloud_cpu_capacity: 1000   # Infinite compute for intensive tasks
+
+processing_times:
+  fog_base_ms: 6             # Fast local execution
+  cloud_base_ms: 28          # Slower execution due to WAN latency
+
+workload:
+  critical_ratio: 0.65       # 65% of data is time-sensitive (e.g., wearable alerts)
+  critical_deadline_ms: 15   # Strict latency threshold
+  batch_deadline_ms: 100     # Loose deadline for compute-intensive tasks
+  
+  # Varying Workload Parameters (Normal vs. Emergency Burst)
+  normal_gap_min: 3
+  normal_gap_max: 6
+  burst_start: 150
+  burst_end: 350
+  burst_gap: 1               # Heavy traffic spike to evaluate load balancer
